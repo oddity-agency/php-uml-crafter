@@ -1,0 +1,76 @@
+{
+    "name": "wongdoody/php-uml-crafter",
+    "description": "This package generates uml from php code",
+    "keywords": [
+        "WongDoody",
+        "laravel",
+        "php-uml-crafter"
+    ],
+    "homepage": "https://github.com/oddity-agency/php-uml-crafter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WongDoody GmbH",
+            "email": "info@odt.net"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "spatie/laravel-package-tools": "^1.14.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^7.8",
+        "orchestra/testbench": "^8.8",
+        "pestphp/pest": "^2.20",
+        "pestphp/pest-plugin-arch": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WongDoody\\PhpUmlCrafter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WongDoody\\PhpUmlCrafter\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@composer run prepare",
+        "clear": "@php vendor/bin/testbench package:purge-php-uml-crafter --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": [
+            "@composer run prepare",
+            "@php vendor/bin/testbench workbench:build --ansi"
+        ],
+        "start": [
+            "Composer\\Config::disableProcessTimeout",
+            "@composer run build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WongDoody\\PhpUmlCrafter\\PhpUmlCrafterServiceProvider"
+            ],
+            "aliases": {
+                "PhpUmlCrafter": "WongDoody\\PhpUmlCrafter\\Facades\\PhpUmlCrafter"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
