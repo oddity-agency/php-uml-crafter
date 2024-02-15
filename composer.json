@@ -7,7 +7,7 @@
         "php-uml-crafter"
     ],
     "homepage": "https://github.com/oddity-agency/php-uml-crafter",
-    "license": "MIT",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "WongDoody GmbH",
