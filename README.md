@@ -1,6 +1,7 @@
 # Php Uml Crafter
 
-This package generates uml from php code
+This package generates uml from php code.
+PlantUML is required to see the diagram, you can either install the plugin in your code editor or use a online tool visualize it.
 
 ## Installation
 
