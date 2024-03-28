@@ -177,9 +177,17 @@ class ScannerService
     private function getPropertyValue($class, $propertyName)
     {
         $reflection = new ReflectionClass($class);
-        $property = $reflection->getProperty($propertyName);
 
-        return $property->getValue(new $class());
+        if (property_exists($class, $propertyName)) {
+            $property = $reflection->getProperty($propertyName);
+            if ($property->isInitialized(new $class())) {
+                return $property->getValue(new $class());
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     private function getTraitsAndInterfaces(ReflectionClass $class): array
