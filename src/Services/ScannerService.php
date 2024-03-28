@@ -18,7 +18,7 @@ class ScannerService
     /**
      * @throws ReflectionException
      */
-    public function execute(string $projectPath, array $excludeFiles, array $excludeDirectories): array
+    public function execute(string $projectPath, array $excludeFiles, array $excludeDirectories, ?bool $includeTraitsAndInterfaces = false): array
     {
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($projectPath)
@@ -28,7 +28,7 @@ class ScannerService
 
         $excludeDirectories = array_map(fn($v) => $projectPath . DIRECTORY_SEPARATOR . $v, $excludeDirectories);
         $excludeFiles = array_map(fn($v) => $projectPath . DIRECTORY_SEPARATOR . $v, $excludeFiles);
-        
+
         foreach ($files as $file) {
             if ($file->isDir() || $file->getExtension() !== 'php' || $this->shouldExclude(
                     $file->getPathname(), $excludeFiles, $excludeDirectories
@@ -42,7 +42,7 @@ class ScannerService
             $class = $this->getClass($filePath, $namespace);
 
             if ($class && class_exists($class)) {
-                $classes[$class] = $this->getClassInfo($class);
+                $classes[$class] = $this->getClassInfo($class, $includeTraitsAndInterfaces);
             }
         }
 
@@ -87,7 +87,7 @@ class ScannerService
     /**
      * @throws ReflectionException
      */
-    private function getClassInfo($class): array
+    private function getClassInfo($class, ?bool $includeTraitsAndInterfaces = false): array
     {
         $reflection = new ReflectionClass($class);
         $methods = [];
@@ -115,7 +115,7 @@ class ScannerService
             'attributes' => $attributes,
             'relations' => [
                 'parent_class' => $parentClass ? $parentClass->getName() : null,
-                'traits_and_interfaces' => $this->getTraitsAndInterfaces($reflection),
+                'traits_and_interfaces' => $this->getTraitsAndInterfaces($reflection, $includeTraitsAndInterfaces),
             ],
         ];
     }
@@ -190,12 +190,15 @@ class ScannerService
         }
     }
 
-    private function getTraitsAndInterfaces(ReflectionClass $class): array
+    private function getTraitsAndInterfaces(ReflectionClass $class, ?bool $includeTraitsAndInterfaces = false): ?array
     {
-        $traits = $class->getTraitNames();
-        $interfaces = $class->getInterfaceNames();
-
-        return array_merge($traits, $interfaces);
+        if ($includeTraitsAndInterfaces) {
+            $traits = $class->getTraitNames();
+            $interfaces = $class->getInterfaceNames();
+            return array_merge($traits, $interfaces);
+        } else {
+            return null;
+        }
     }
 
     private function isModelClass($class): bool

@@ -63,6 +63,8 @@ It is also possible to pass the following options in the command:
 
 `--save-path`: Path to save the generated UML diagrams as string.
 
+`--include-traits`: --include-traits=true scan traits and interfaces
+
 ## Usage in other PHP Frameworks
 
 For other PHP frameworks, you can still utilize the UML Crafter package to scan classes and generate UML diagrams. Below is a generic command that can be adjusted to fit the structure and requirements of different frameworks:
