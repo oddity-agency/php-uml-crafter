@@ -71,7 +71,7 @@ For other PHP frameworks, you can still utilize the UML Crafter package to scan 
 
 Scan classes
 ```bash
-uml-crafter:generate --project-path=your_project_directory --exclude-directories=directories_to_exclude --exclude-files=files_to_exclude --save-path=path_to_save_scanned_data
+uml-crafter:generate --project-path=your_project_directory --exclude-directories=directories_to_exclude --exclude-files=files_to_exclude --save-path=path_to_save_scanned_data --include-traits=true
 ```
 
 Replace the placeholders (your_project_directory, directory_to_exclude, file_to_exclude, path_to_save_diagrams) with appropriate values according to your PHP framework's directory structure and preferences.
@@ -85,6 +85,15 @@ Replace the placeholders (your_project_directory, directory_to_exclude, file_to_
 `--save-path`: Path to save the generated UML diagrams as string.
 
 Make sure to adjust the command parameters to match your specific PHP framework's structure and requirements.
+
+## Styling
+
+For the uml-crafter:generate command there is also an option to change style to light mode (as default is dark mode set).
+Add flag below to the command:
+
+`--light-mode`: Change style to light mode
+
+Example: php artisan uml-crafter:generate --light-mode=true
 
 ## Credits
 

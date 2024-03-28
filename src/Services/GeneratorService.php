@@ -6,19 +6,21 @@ use Illuminate\Support\Arr;
 
 class GeneratorService
 {
-    public function execute($data): string
+    public function execute($data, ?bool $lightMode = false): string
     {
         $umlSyntax = "@startuml\n\n";
 
-        $umlSyntax .= " skinparam ranksep 350\n";
-        $umlSyntax .= " skinparam backgroundColor #343434\n";
-        $umlSyntax .= " skinparam roundcorner 20\n";
-        $umlSyntax .= " skinparam ArrowColor SeaGreen\n";
-        $umlSyntax .= " skinparam classFontColor white\n";
+        if(!$lightMode) {
+            $umlSyntax .= " skinparam ranksep 350\n";
+            $umlSyntax .= " skinparam backgroundColor #343434\n";
+            $umlSyntax .= " skinparam roundcorner 20\n";
+            $umlSyntax .= " skinparam ArrowColor SeaGreen\n";
+            $umlSyntax .= " skinparam classFontColor white\n";
 
-        $umlSyntax .= "skinparam class {\n";
-        $umlSyntax .= "BackgroundColor #545454\n";
-        $umlSyntax .= "}\n";
+            $umlSyntax .= "skinparam class {\n";
+            $umlSyntax .= "BackgroundColor #545454\n";
+            $umlSyntax .= "}\n";
+        }
 
         $umlSyntax .= "skinparam package {\n";
         $umlSyntax .= "skinparam packageFontColor SpringGreen\n";
